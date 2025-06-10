@@ -6,8 +6,8 @@ ics_file = (
 )
 df = pd.read_csv(
     ics_file,
-    usecols=["INCIDENT_ID", "DISCOVERY_DATE", "FIRED_SIMPLE_FSR"],
-    parse_dates=["DISCOVERY_DATE"]
+    usecols=["INCIDENT_ID", "DISCOVERY_DATE", "WF_CESSATION_DATE", "FIRED_SIMPLE_FSR"],
+    parse_dates=["DISCOVERY_DATE", "WF_CESSATION_DATE"]
 )
 
 top10 = (
@@ -15,10 +15,11 @@ top10 = (
       .head(10)
       .rename(columns={
           "INCIDENT_ID": "fire_id",
-          "DISCOVERY_DATE": "date_start"
+          "DISCOVERY_DATE": "date_start",
+	  "WF_CESSATION_DATE":  "date_end"
       })
 )
-top10[["fire_id", "date_start"]].to_csv(
+top10[["fire_id", "date_start", "date_end"]].to_csv(
     "core_fires.csv",
     index=False,
     date_format="%Y-%m-%d"
